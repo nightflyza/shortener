@@ -18,10 +18,17 @@ class ShortenerService {
      */
     protected $allocList = array();
 
+    /**
+     * Generate header or JS redirect?
+     *
+     * @var bool
+     */
+    protected $useHeader = false;
+
     //some predefined stuff here
     const DATA_PATH = 'data/';
-    const ROUTE_SAVE='shorten';
-    const ROUTE_REDIRECT='go';
+    const ROUTE_SAVE = 'shorten';
+    const ROUTE_REDIRECT = 'go';
 
     public function __construct() {
         $this->loadAlloc();
@@ -101,6 +108,30 @@ class ShortenerService {
         return ($result);
     }
 
+    /**
+     * Redirects user to some specified URL
+     * 
+     * @param string $url URL to perform redirect
+     * @param bool $header Use header redirect instead of JS document.location
+     * 
+     * @return void
+     */
+    public function nav($url, $header = false) {
+        if (!empty($url)) {
+            if ($header) {
+                @header('Location: ' . $url);
+            } else {
+                print('<script language="javascript">document.location.href="' . $url . '";</script>');
+            }
+        }
+    }
+    /**
+     * Saves a given URL to a file and returns a unique identifier for the URL.
+     *
+     * @param string $url The URL to be saved.
+     *
+     * @return string|void
+     */
     public function saveUrl($url) {
         $result = '';
         if (!empty($url)) {
