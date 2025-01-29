@@ -148,6 +148,10 @@ class ShortenerService {
                 }
             }
         }
+
+        if (empty($result)) {
+            header('HTTP/1.1 400 Saving failed', true, 400);
+        }
         return ($result);
     }
 
@@ -167,9 +171,11 @@ class ShortenerService {
                 if (!empty($urlBody)) {
                     $this->nav($urlBody,$this->useHeader);
                 } else {
+                    header('HTTP/1.1 400 Request failed', true, 400);
                     die('Error: empty URL body');
                 }
             } else {
+                header('HTTP/1.1 400 Request failed', true, 400);
                 die('Error: URL not found');
             }
         }
