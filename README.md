@@ -27,6 +27,18 @@ Just tiny URL shortener service
 # chmod -R 777 s/data
 ```
 
+# Apache mod_rewrite
+Make sure that Apache mod_rewrite is enabled on your server in /usr/local/etc/apache24/httpd.conf
+
+```
+LoadModule rewrite_module libexec/apache24/mod_rewrite.so
+```
+if this line is commented, just uncomment it and restart your web-server
+
+```
+apachectl restart
+```
+
 # Usage
 Saving URL: 
 
