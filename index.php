@@ -5,7 +5,7 @@
  */
 class ShortenerService {
     /**
-     * Contains default unique identifier lenght
+     * Contains default unique URL identifier lenght
      *
      * @var int
      */
@@ -23,7 +23,7 @@ class ShortenerService {
      *
      * @var bool
      */
-    protected $useHeader = false;
+    protected $useHeader = true;
 
     //some predefined stuff here
     const DATA_PATH = 'data/';
@@ -116,7 +116,7 @@ class ShortenerService {
      * 
      * @return void
      */
-    public function nav($url, $header = false) {
+    protected function nav($url, $header = false) {
         if (!empty($url)) {
             if ($header) {
                 @header('Location: ' . $url);
@@ -150,19 +150,44 @@ class ShortenerService {
         }
         return ($result);
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $urlId
+     * 
+     * @return void
+     */
+    public function navigateUrl($urlId = '') {
+        $urlId=preg_replace('/\0/s', '', $urlId);
+        $urlId=preg_replace('#[^a-zA-Z0-9]#u', '', $urlId);
+        if (!empty($urlId)) {
+            if (isset($this->allocList[$urlId])) {
+                $urlBody=file_get_contents(self::DATA_PATH.$urlId);
+                if (!empty($urlBody)) {
+                    $this->nav($urlBody,$this->useHeader);
+                } else {
+                    die('Error: empty URL body');
+                }
+            } else {
+                die('Error: URL not found');
+            }
+        }
+    }
 }
 
 $shortener = new ShortenerService();
 
+//saving new url
 if (isset($_GET[$shortener::ROUTE_SAVE])) {
     if (!empty($_GET[$shortener::ROUTE_SAVE])) {
         print($shortener->saveUrl($_GET[$shortener::ROUTE_SAVE]));
     }
 }
 
-
+//redirecting to some saved URL
 if (isset($_GET[$shortener::ROUTE_REDIRECT])) {
     if (!empty($_GET[$shortener::ROUTE_REDIRECT])) {
-        //TODO
+        $shortener->navigateUrl($_GET[$shortener::ROUTE_REDIRECT]);
     }
 }
