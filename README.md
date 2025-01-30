@@ -27,7 +27,7 @@ Just tiny URL shortener service
 # chmod -R 777 s/data
 ```
 
-# Apache mod_rewrite
+# Apache configuration
 Make sure that Apache mod_rewrite is enabled on your server in /usr/local/etc/apache24/httpd.conf
 
 ```
@@ -37,6 +37,15 @@ if this line is commented, just uncomment it and restart your web-server
 
 ```
 apachectl restart
+```
+
+also check for AllowOverride option in your Apache config
+
+```
+<Directory />
+    AllowOverride All
+    Order deny,allow
+</Directory>
 ```
 
 # Usage
