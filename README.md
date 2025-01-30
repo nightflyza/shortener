@@ -5,7 +5,7 @@ Just tiny URL shortener service
 # System requirements
 
   * Apache 1.3/2.2/2.4 web server + mod_rewrite
-  * PHP 5.3-8.3
+  * PHP 5.3-8.4
     
 # FreeBSD quick setup
 ```   
