@@ -46,8 +46,8 @@ Saving URL:
 https://yourhost.com/s/?shorten=https://piclod.com/
 ```
 
-If the save is successful, a unique 12-digit link identifier with HTTP code 200 will be returned. 
-In case any error ocurred you just get empty result with HTTP 400 error code.
+If the save is successful, a unique 12-characters link identifier with HTTP code 200 will be returned. 
+In case any error occurred you just get empty result with HTTP 400 error code.
 
 
 Using received URL Id:
